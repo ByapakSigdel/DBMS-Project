@@ -3,11 +3,11 @@ const dotEnv = require('dotenv');
 dotEnv.config();
 
 const config = {
-    port: process.env.PORT || 8080,
-    host: process.env.HOST || 'localhost',
-    user: process.env.DB_USER || 'root',
-    password: process.env.PASSWORD,
-    database: process.env.DATABASE
+    port: process.env.MYSQL_ADDON_PORT || 8080,
+    host: process.env.MYSQL_ADDON_HOST || 'localhost',
+    user: process.env.MYSQL_ADDON_USER || 'root',
+    password: process.env.MYSQL_ADDON_PASSWORD,
+    database: process.env.MYSQL_ADDON_DB
 }
 
 module.exports = config;

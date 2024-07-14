@@ -4,17 +4,18 @@ create table department
 	did int primary key not null,
     dname varchar(50)
 );
-create table student
+CREATE TABLE student
 (
-    first_name varchar(100),
-	last_name  varchar(100),
-	full_name varchar(200) AS (concat_ws(' ', first_name, last_name)),
-    sapid varchar(11) primary key not null,
-    gender varchar(6) not null,
-    dob date,
-    did int,
-    foreign key(did) references department(did)
+    first_name VARCHAR(100),
+    last_name VARCHAR(100),
+    full_name VARCHAR(200) GENERATED ALWAYS AS (concat_ws(' ', first_name, last_name)) STORED,
+    sapid VARCHAR(11) PRIMARY KEY NOT NULL,
+    gender VARCHAR(6) NOT NULL,
+    dob DATE,
+    did INT,
+    FOREIGN KEY (did) REFERENCES department(did)
 );
+
 create table faculty 
 (
 	fid int primary key not null,
@@ -118,27 +119,25 @@ create table co_members
 );
 
 insert into department (did,dname) values(1,"Computer Engineering");
-insert into department (did,dname) values(2,"Civil Engineering");
+insert into department (did,dname) values(2,"Mechanical Engineering");
 insert into department (did,dname) values(3,"Electronics Engineering");
-insert into department (did,dname) values(4,"Electrical Engineering");
+insert into department (did,dname) values(4,"Data Science");
 
-INSERT INTO faculty VALUES (34, "Pratiksha Shrestha", 50000, "pratiksha@kec.edu.np", 1);
-INSERT INTO faculty VALUES (56, "Suresh Manandhar", 60000, "suresh@kec.edu.np", 1);
-INSERT INTO faculty VALUES (66, "Bishal Gurung", 70000, "bishal@kec.edu.np", 1);
+insert into faculty values(34,"Neha Sharma",50000,"neha@faculty.com",1);
+insert into faculty values(56,"Rohan Kakade",60000,"rohan@faculty.com",1);
+insert into faculty values(66,"Mohan Mistry",70000,"mohan@faculty.com",1);
 
+insert into faculty values(12,"Pratik Sharma",50000,"pratik@faculty.com",2);
+insert into faculty values(26,"Manav Shah",60000,"manav@faculty.com",2);
+insert into faculty values(42,"Rohan Savla",70000,"rohan@faculty.com",2);
 
-INSERT INTO faculty VALUES (12, "Ashish Shrestha", 50000, "ashish@kec.edu.np", 2);
-INSERT INTO faculty VALUES (26, "Bibek Pandey", 60000, "bibek@kec.edu.np", 2);
-INSERT INTO faculty VALUES (42, "Rakesh Tamang", 70000, "rakesh@kec.edu.np", 2);
+insert into faculty values(2,"Dipesh Agarwal",50000,"dipesh@faculty.com",3);
+insert into faculty values(24,"Kreena Kapoor",60000,"kreena@faculty.com",3);
+insert into faculty values(18,"Karishma Shah",70000,"karishma@faculty.com",3);
 
-INSERT INTO faculty VALUES (2, "Dipendra Thapa", 50000, "dipendra@kec.edu.np", 3);
-INSERT INTO faculty VALUES (24, "Anjali Maharjan", 60000, "anjali@kec.edu.np", 3);
-INSERT INTO faculty VALUES (18, "Karuna Shakya", 70000, "karuna@kec.edu.np", 3);
-
-INSERT INTO faculty VALUES (73, "Shivraj Bhandari", 50000, "shivraj@kec.edu.np", 4);
-INSERT INTO faculty VALUES (48, "Poonam Khadka", 60000, "poonam@kec.edu.np", 4);
-INSERT INTO faculty VALUES (37, "Manisha Gurung", 70000, "manisha@kec.edu.np", 4);
-
+insert into faculty values(73,"Shivesh Bhandari",50000,"shivesh@faculty.com",4);
+insert into faculty values(48,"Poonam Choudhary",60000,"poonam@faculty.com",4);
+insert into faculty values(37,"Manika Saxena",70000,"manika@faculty.com",4);
 
 update department
 set hod = 66
@@ -156,32 +155,30 @@ update department
 set hod = 37
 where did = 4;
 
-insert into student (first_name,last_name,sapid,gender,dob,did) values ("Nabin","Shah","60004180061","male","2001-01-20",1);
-insert into student (first_name,last_name,sapid,gender,dob,did) values ("Nirajan","Vasavat","60004180064","male","2000-08-08",1);
-insert into student (first_name,last_name,sapid,gender,dob,did) values ("Nirvik","Dangi","60004180056","male","2000-07-30",1);
+insert into student (first_name,last_name,sapid,gender,dob,did) values ("Nemil","Shah","60004180061","male","2001-01-20",1);
+insert into student (first_name,last_name,sapid,gender,dob,did) values ("Nimit","Vasavat","60004180064","male","2000-08-08",1);
+insert into student (first_name,last_name,sapid,gender,dob,did) values ("Naman","Dangi","60004180056","male","2000-07-30",1);
 
-insert into student (first_name,last_name,sapid,gender,dob,did) values ("Kiran","Shah","60005180061","male","2000-12-08",2);
-insert into student (first_name,last_name,sapid,gender,dob,did) values ("Kumar","Kini","60005180064","male","2000-10-08",2);
-insert into student (first_name,last_name,sapid,gender,dob,did) values ("Jyoti","Jain","60005180056","male","2000-09-12",2);
+insert into student (first_name,last_name,sapid,gender,dob,did) values ("Kanishk","Shah","60005180061","male","2000-12-08",2);
+insert into student (first_name,last_name,sapid,gender,dob,did) values ("Kedar","Kini","60005180064","male","2000-10-08",2);
+insert into student (first_name,last_name,sapid,gender,dob,did) values ("Jinit","Jain","60005180056","male","2000-09-12",2);
 
-insert into student (first_name,last_name,sapid,gender,dob,did) values ("Manisha","Sharma","60003180061","female","2000-02-03",3);
-insert into student (first_name,last_name,sapid,gender,dob,did) values ("Pooja","Galia","60003180064","female","2000-05-15",3);
-insert into student (first_name,last_name,sapid,gender,dob,did) values ("Saraswati","Jain","60003180056","female","2000-12-02",3);
+insert into student (first_name,last_name,sapid,gender,dob,did) values ("Muskaan","Sharma","60003180061","female","2000-02-03",3);
+insert into student (first_name,last_name,sapid,gender,dob,did) values ("Pankti","Galia","60003180064","female","2000-05-15",3);
+insert into student (first_name,last_name,sapid,gender,dob,did) values ("Shreya","Jain","60003180056","female","2000-12-02",3);
 
-insert into student (first_name,last_name,sapid,gender,dob,did) values ("Aashish","Kumar","60007180061","male","2000-04-13",4);
-insert into student (first_name,last_name,sapid,gender,dob,did) values ("Roshani","Maheshwari","60007180064","female","2000-06-23",4);
-insert into student (first_name,last_name,sapid,gender,dob,did) values ("Anjali","Nair","60007180056","female","2000-03-15",4);
-
+insert into student (first_name,last_name,sapid,gender,dob,did) values ("Abhinav","Kumar","60007180061","male","2000-04-13",4);
+insert into student (first_name,last_name,sapid,gender,dob,did) values ("Rhea","Maheshwari","60007180064","female","2000-06-23",4);
+insert into student (first_name,last_name,sapid,gender,dob,did) values ("Aakansha","Nair","60007180056","female","2000-03-15",4);
 
 insert into course values(2,"Advanced Algorithms",4,1);
 insert into course values(4,"Operating System",4,1);
-insert into course values(6,"Fluid Mechanics",4,2);
-insert into course values(8,"Mechanical Engineering",4,2);
-insert into course values(10,"Microprocessor Architecture",4,3);
-insert into course values(12,"Electronics and Communication",4,3);
+insert into course values(6,"Fluids",4,2);
+insert into course values(8,"Mechanical Forces",4,2);
+insert into course values(10,"Microprocessor",4,3);
+insert into course values(12,"Electronics Communication",4,3);
 insert into course values(14,"Applied Statistics",4,4);
 insert into course values(16,"Machine Learning",4,4);
-
 
 insert into teaches values(34,2);
 insert into teaches values(56,4);
@@ -192,9 +189,8 @@ insert into teaches values(24,12);
 insert into teaches values(73,14);
 insert into teaches values(48,16);
 
-insert into research_proj values(1,"Agricultural Technology in Nepal","Developing technology to enhance agricultural productivity and sustainability in Nepal.");
-insert into research_proj values(2,"Analysis of Air Quality in Kathmandu Valley","Studying trends in air quality across different areas of Kathmandu Valley.");
-
+insert into research_proj values(1,"Farmer's Tech","Working on technology to help farmers improve on the efficiency of their farm fields.");
+insert into research_proj values(2,"Analysis of Air Pollution in India","Working on trends of air quality of different cities in India.");
 
 insert into research_faculty values(12,1);
 insert into research_faculty values(34,2);
