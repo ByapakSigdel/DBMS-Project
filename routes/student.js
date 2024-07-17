@@ -1,8 +1,7 @@
-const { Router } = require('express');
-const { getAllStudents } = require('../controllers/students');
+const express = require('express');
+const router = express.Router();
+const { executeQuery } = require('../controllers/execueteQuery');
 
-const router = Router();
-
-router.get('/', getAllStudents);
+router.post('/api/executeQuery', executeQuery);
 
 module.exports = router;

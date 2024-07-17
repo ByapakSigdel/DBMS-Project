@@ -50,7 +50,7 @@ function AddBook(props) {
               body: JSON.stringify(data),
             });
           }
-         /*  window.location.href = "http://localhost:3000/library"; */
+          window.location.href = "/library";
         } else {
           var error =
             "<p class='alert alert-danger' >Enter integer for edition</p>";

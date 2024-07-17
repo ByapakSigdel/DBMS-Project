@@ -1,90 +1,68 @@
-import React, { useState, useEffect } from "react";
-import { Col, Row } from "react-bootstrap";
-import studentIcon from "../images/commiteeLogo.png";
-import teacherIcon from "../images/commiteeLogo.png";
-import bookIcon from "../images/book.png";
+import React, { useState } from "react";
+import { Container } from "react-bootstrap";
 
 function Details() {
-  const [students, setStudents] = useState([]);
-  const [teachers, setTeachers] = useState([]);
+  const [inputValue, setInputValue] = useState("");
+  const [result, setResult] = useState(null);
+  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    // Fetch students and teachers data
-    async function fetchData() {
-        try {
-          const studentsResponse = await fetch("/api/getAllStudents");
-          if (!studentsResponse.ok) {
-            throw new Error("Failed to fetch students");
-          }
-          const studentsData = await studentsResponse.json();
-      
-          const teachersResponse = await fetch("/api/teachers");
-          if (!teachersResponse.ok) {
-            throw new Error("Failed to fetch teachers");
-          }
-          const teachersData = await teachersResponse.json();
-      
-          setStudents(studentsData);
-          setTeachers(teachersData);
-        } catch (error) {
-          console.error("Error fetching data:", error.message);
-        }
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("/api/executeQuery", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ query: inputValue }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setResult(data.result);
+        setError(null);
+      } else {
+        setError(data.error);
+        setResult(null);
       }
-      
-
-    fetchData();
-  }, []);
+    } catch (err) {
+      setError("Something went wrong.");
+      setResult(null);
+    }
+  };
 
   return (
-    <div>
-      <Row>
-        <Col md={6}>
-          <h2>Students</h2>
-          {students.length > 0 ? (
-            students.map((student, index) => (
-              <div key={index} className="details-card">
-                <img src={studentIcon} alt="Student Icon" className="details-icon" />
-                <h4>{student.name}</h4>
-                <p>Email: {student.email}</p>
-                <p>Department: {student.department}</p>
-                <hr />
-              </div>
-            ))
-          ) : (
-            <p>No students found.</p>
-          )}
-        </Col>
-        <Col md={6}>
-          <h2>Teachers</h2>
-          {teachers.length > 0 ? (
-            teachers.map((teacher, index) => (
-              <div key={index} className="details-card">
-                <img src={teacherIcon} alt="Teacher Icon" className="details-icon" />
-                <h4>{teacher.name}</h4>
-                <p>Email: {teacher.email}</p>
-                <p>Department: {teacher.department}</p>
-                {teacher.books && (
-                  <div>
-                    <h5>Authored Books:</h5>
-                    <ul>
-                      {teacher.books.map((book, idx) => (
-                        <li key={idx}>
-                          <img src={bookIcon} alt="Book Icon" className="details-icon" />
-                          {book.title} - {book.year}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-                <hr />
-              </div>
-            ))
-          ) : (
-            <p>No teachers found.</p>
-          )}
-        </Col>
-      </Row>
-    </div>
+    <Container className="d-flex flex-column justify-content-center align-items-center vh-100">
+      <form onSubmit={handleSubmit} className="w-50">
+        <input
+          type="text"
+          value={inputValue}
+          onChange={handleInputChange}
+          className="form-control mb-3"
+          placeholder="Enter SQL query..."
+        />
+        <button type="submit" className="btn btn-primary">
+          Execute
+        </button>
+      </form>
+      {result && (
+        <div className="mt-3">
+          <h5>Result:</h5>
+          <pre>{JSON.stringify(result, null, 2)}</pre>
+        </div>
+      )}
+      {error && (
+        <div className="mt-3">
+          <h5>Error:</h5>
+          <pre>{error}</pre>
+        </div>
+      )}
+    </Container>
   );
 }
 
